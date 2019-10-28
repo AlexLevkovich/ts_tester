@@ -109,7 +109,7 @@ protected:
 
     void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) {
         QGraphicsScene::mousePressEvent(mouseEvent);
-        if (!test_mode && mouseEvent->button() != Qt::MiddleButton) mousePressEvent(mouseEvent->scenePos(),mouseEvent);
+        if (!test_mode && mouseEvent->button() == Qt::LeftButton) mousePressEvent(mouseEvent->scenePos(),mouseEvent);
         else if (test_mode && mouseEvent->button() == Qt::MiddleButton) {
             middle_count++;
             if (middle_count == 1) {
