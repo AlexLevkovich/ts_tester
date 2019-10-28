@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>img/application-exit.svg</file>
+    </qresource>
+</RCC>
