@@ -20,7 +20,7 @@ SOURCES += \
     quitbutton.cpp \
     randomcolor.cpp \
     squaresize.cpp \
-    touchemulator.cpp \
+    testscene.cpp \
     touchitem.cpp \
     touchmain.cpp
 
@@ -28,7 +28,7 @@ HEADERS += \
     quitbutton.h \
     randomcolor.h \
     squaresize.h \
-    touchemulator.h \
+    testscene.h \
     touchitem.h \
     touchmain.h
 

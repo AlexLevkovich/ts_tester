@@ -4,14 +4,17 @@
 #include <QScreen>
 #include <QPen>
 #include <QBrush>
+#include <QTouchEvent>
 #include <QGraphicsScene>
+#include <QGraphicsSceneMouseEvent>
+#include <QDebug>
 #include "randomcolor.h"
 
 int TouchItem::m_count = 0;
 QList<bool> TouchItem::touched;
 
-TouchItem::TouchItem(const QPointF & pos) : QGraphicsEllipseItem(SquareRectF(TouchItem::dimention())) {
-    setFlag(QGraphicsItem::ItemIsMovable,true);
+TouchItem::TouchItem(const QPointF & pos) : QObject(NULL), QGraphicsEllipseItem(SquareRectF(TouchItem::dimention())) {
+    setAcceptTouchEvents(true);
     setPen(QPen(Qt::black));
     setBrush(RandomColor::brush());
     setPos(pos);
@@ -53,8 +56,39 @@ int TouchItem::id() const {
 QVariant TouchItem::itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant &value) {
     QVariant ret = QGraphicsEllipseItem::itemChange(change,value);
     if (change == QGraphicsItem::ItemSceneChange) {
-        QGraphicsScene * scene = value.value<QGraphicsScene*>();
-        if (scene != NULL) generateID();
+        if (value.value<QGraphicsScene*>() != NULL) generateID();
     }
     return ret;
+}
+
+bool TouchItem::sceneEvent(QEvent *event) {
+    switch (event->type()) {
+        case QEvent::TouchBegin:
+        case QEvent::TouchUpdate:
+        case QEvent::TouchEnd:
+        {
+            QTouchEvent * tevent = (QTouchEvent *)event;
+            QList<QTouchEvent::TouchPoint> points = tevent->touchPoints();
+            for (int i=0;i<points.count();i++) {
+                if (points[i].state() == Qt::TouchPointReleased) {
+                    deleteLater();
+                }
+                else if (points[i].state() == Qt::TouchPointMoved) {
+                    setPos(points[i].scenePos());
+                }
+            }
+            break;
+        }
+        default:
+            break;
+    }
+    return QGraphicsEllipseItem::sceneEvent(event);
+}
+
+void TouchItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *) {
+    deleteLater();
+}
+
+void TouchItem::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
+   setPos(mouseEvent->scenePos());
 }

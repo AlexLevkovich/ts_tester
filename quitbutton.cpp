@@ -42,10 +42,6 @@ bool QuitButton::sceneEvent(QEvent *event) {
                         mouseReleaseEvent(NULL);
                         break;
                     }
-                    else if (points[i].state() == Qt::TouchPointPressed) {
-                        mousePressEvent(NULL);
-                        break;
-                    }
                 }
             }
         }
@@ -58,13 +54,6 @@ bool QuitButton::sceneEvent(QEvent *event) {
     return ret;
 }
 
-void QuitButton::mousePressEvent(QGraphicsSceneMouseEvent *event) {
-    QGraphicsPixmapItem::mousePressEvent(event);
-    event->accept();
-}
-
-void QuitButton::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
-    QGraphicsPixmapItem::mouseReleaseEvent(event);
+void QuitButton::mouseReleaseEvent(QGraphicsSceneMouseEvent *) {
     qApp->quit();
 }
-

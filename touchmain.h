@@ -9,7 +9,7 @@ class TouchMain : public QGraphicsView {
     Q_OBJECT
 
 public:
-    TouchMain(bool test_mode = false,QWidget *parent = nullptr);
+    TouchMain(QWidget *parent = nullptr);
     ~TouchMain();
 
 private:

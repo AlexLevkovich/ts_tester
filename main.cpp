@@ -4,7 +4,7 @@
 
 int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
-    TouchMain w(argc >= 2 && !strcmp(argv[1],"--test"));
+    TouchMain w;
     w.show();
     return a.exec();
 }
